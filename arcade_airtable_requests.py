@@ -44,6 +44,11 @@ def download_table(session: requests.Session = default_session, raw = False):
         params=params,
         cookies=cookies,
         headers=headers,
+        # please remove this line if you are selfhosting
+        proxies= {
+            "http": "lab.internal.smashcloud.org:8131",
+            "https": "lab.internal.smashcloud.org:8131",
+        }
     )
     if raw == True:
         return response

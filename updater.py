@@ -1,15 +1,20 @@
 import arcade_airtable_requests
 import csv
 import time
+from datetime import datetime
 
 TABLE_WITH_COLS = "tblXCMI4Rp3KwMVHA"
 COL = "fldBU1XI8cbCtMnyi"
 PENDING_TABLE = "tblInG5Kg3SlVKNob"
 
+def get_current_datetime_str():
+    return datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+
 # average csv pipeline I borrowed from stackoverflow
 with open("data.csv", "a") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=[
         "Time",
+        "Formatted Time",
         "Hours Approved",
         "Hours Pending"
     ])
@@ -36,7 +41,8 @@ with open("data.csv", "a") as csvfile:
             print(hours_sum)
 
             writer.writerow({
-                "Time": time.time(),
+                "Time": int(time.time()),
+                "Formatted Time": get_current_datetime_str(),
                 "Hours Approved": hours_sum,
                 "Hours Pending": totals[PENDING_TABLE]
             })
